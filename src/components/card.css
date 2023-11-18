@@ -1,0 +1,83 @@
+/* here come the root and dark color combos... */
+:root {
+    /* --bg: #fff; */
+    /* --body-bg: white;
+    --heading-dark: #182F69;
+    --heading-light: #A084DF;
+    --search-box: #EEE;
+    --nav-bar: #FFF;
+    --text-color: #473276;
+    --button-color: #fff;
+    --slider-color: linear-gradient(165deg, rgba(87,10,215,1) 0%, rgba(145,93,223,1) 52%, rgba(212,195,226,1) 100%); */
+    --card-bg: #fff;
+    --text-color: black;
+    --text-color-secondary: #555;
+    --active-card: #182F69;
+}
+[my-theme="dark"] {
+    /* --body-bg: linear-gradient(90deg, #5A337A 0%, #1E2F6B 100%);
+    --heading-dark: #A2D4C4;
+    --heading-light: #FFF;
+    --search-box: rgba(200, 200, 200, 0.3);
+    --nav-bar: rgb(82, 82, 114);
+    --text-color: #FFF;
+    --slider-color: linear-gradient(165deg, rgba(2,0,36,1) 0%, rgba(80,80,205,1) 50%, rgba(135,135,236,1) 100%); */
+    --card-bg: #2229;
+    --text-color: white;
+    --text-color-secondary: #bbb;
+    --active-card: #A2D4C4;
+}
+
+.card-container{
+    width: 100%;
+    /* max-width: 1300px; */
+    padding: 30px;
+    /* border: 1px solid black; */
+}
+/*.card{
+    border: 1px solid blue;
+    width: 100%;
+} */
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 10px solid transparent;
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+}
+.details{
+    display: flex;
+    margin: 10px;
+    justify-content: space-between;
+    color: var(--text-color-secondary) !important;
+    /* color: red; */
+}
+.title{
+    padding: 0 10px;
+}
+.card-description{
+    color: var(--text-color-secondary) !important;
+}
+.card-action{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px 5px 10px;
+}
+
+.activeCard{
+    border-bottom: 10px solid var(--active-card);
+}
+
+@media (max-width: 1024px){
+    .card-container{
+        padding-top: 3rem;
+    }
+}
+@media (max-width: 720px){
+    .card-container{
+        padding-top: 3rem;
+    }
+}
+
