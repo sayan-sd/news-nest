@@ -4,9 +4,14 @@ import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
 import "./card.css";
 import Footer from './Footer';
+import Loader from './Loader';
 // import Typography from "@mui/material/Typography";
 
 function NewsCards({ articles, activeArticle }) {
+    // Checking... if 'articles' is undefined or not an array
+    if (!articles || !Array.isArray(articles) || articles.length === 0) {
+        return <div>{<Loader/>}</div>;
+    }
     return (
         <>
             <Grow in className="card-container">
