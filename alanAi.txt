@@ -1,0 +1,148 @@
+#This is the js code for alan ai studio...
+
+intent("What does this app do?", "What can I do here?",
+      reply("This is a news application, you can read or listen to various news here."))
+
+intent("Who (developed|create|make|build| develop) this app?",
+      reply("This app was developed by Sayan using React js. You can find his social media links in the footer section."))
+
+const API_KEY = "b9782f55220642029d829a060000e3cf";
+let savedArticles = [];
+
+//news by source
+intent('Give me the news from $(source* (.*))', async p => {
+    const source = p.source.value.toLowerCase().split(" ").join('-');
+    const NEWS_API_URL = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&sources=${source}`;
+    
+    try {
+        const response = await api.axios.get(NEWS_API_URL);
+
+        if (response.status === 200) {
+            const data = response.data;
+            const articles = data.articles;
+            savedArticles = articles;
+            
+            if (articles && articles.length > 0) {
+                p.play({ command: 'newHeadlines', articles });
+                p.play(`Here are the (latest|recent) news from ${p.source.value}.`);
+                               
+                p.play('Would you like me to read the headlines?');
+                p.then(confirmation);
+            } else {
+                p.play('I couldn\'t find any news from the specified source. Please try another source.');
+            }
+        } else {
+            console.error('Error getting news:', response.status, response.statusText);
+            p.play('I encountered an issue while fetching the news. Please try again later.');
+        }
+    } catch (error) {
+        console.error('Error during API request:', error);
+        p.play('I encountered an issue while fetching the news. Please try again later.');
+    }
+});
+
+
+//news by term
+intent('What\'s up with $(term* (.*))', async p => {
+    let NEWS_API_URL = `https://newsapi.org/v2/everything?apiKey=${API_KEY}`;
+    if(p.term.value){
+        NEWS_API_URL = `${NEWS_API_URL}&q=${p.term.value}`;   
+    }
+    
+    try {
+        const response = await api.axios.get(NEWS_API_URL);
+
+        if (response.status === 200) {
+            const data = response.data;
+            const articles = data.articles;
+            savedArticles = articles;
+            
+            if (articles && articles.length > 0) {
+                p.play({ command: 'newHeadlines', articles });
+                p.play(`Here are the (latest|recent) articles on ${p.term.value}.`);
+                p.play('Would you like me to read the headlines?');
+                p.then(confirmation);
+            } else {
+                p.play('I couldn\'t find any news on the specified term. Please try another term.');
+            }
+        } else {
+            console.error('Error getting news:', response.status, response.statusText);
+            p.play('I encountered an issue while fetching the news. Please try again later.');
+        }
+    } catch (error) {
+        console.error('Error during API request:', error);
+        p.play('I encountered an issue while fetching the news. Please try again later.');
+    }
+});
+
+
+//news by category
+const CATEGORIES = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
+const CATEGORIES_INTENT = CATEGORIES.map(function (category) {
+    return category + '~' + category;
+}).join('|') + '|';
+
+intent(`(show|what is|tell me|what's|what are|what're|read) (the|) (recent|latest|) $(N news|headlines) (in|about|on|) $(C~ ${CATEGORIES_INTENT})`,
+  `(read|show|get|bring me|give me) (the|) (recent|latest) $(C~ ${CATEGORIES_INTENT}) $(N news|headlines)`, async p => {
+    
+    let NEWS_API_URL = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&country=in`;
+    if(p.C.value){
+        NEWS_API_URL = `${NEWS_API_URL}&category=${p.C.value}`;   
+    }
+    
+    try {
+        const response = await api.axios.get(NEWS_API_URL);
+
+        if (response.status === 200) {
+            const data = response.data;
+            const articles = data.articles;
+            savedArticles = articles;
+            
+            if (articles && articles.length > 0) {
+                p.play({ command: 'newHeadlines', articles });
+                if(p.C.value){
+                    p.play(`Here are the (latest|recent) articles on ${p.C.value}.`);
+                }
+                else{
+                    p.play(`Here are the latest news.`)
+                }
+                p.play('Would you like me to read the headlines?');
+                p.then(confirmation);
+                
+            } else {
+                p.play('I couldn\'t find any news on the specified Category. Please try something else.');
+            }
+        } else {
+            console.error('Error getting news:', response.status, response.statusText);
+            p.play('I encountered an issue while fetching the news. Please try again later.');
+        }
+    } catch (error) {
+        console.error('Error during API request:', error);
+        p.play('I encountered an issue while fetching the news. Please try again later.');
+    }
+});
+
+const confirmation = context(() => {
+    intent('(yes|yup|yes please|yah|yep)', async (p) => {
+        for(let i=0; i<savedArticles.length; i++){
+            p.play({command: 'highlight', article: savedArticles[i]});
+            p.play(`${savedArticles[i].title}`);
+        }
+    });
+    intent('(no|nope|nah)', async (p) => {
+        p.play({command: 'highlight', article: savedArticles[0]});
+        p.play('Okay, feel free to ask if you need further help');
+    });
+})
+
+
+intent('open (the article|article number) $(number* (.*))', (p) => {
+    if(p.number.value){
+        p.play({ command: 'open', number: p.number.value, articles: savedArticles})
+    }
+})
+
+intent('go back', (p) => {
+    p.play('Sure, going back');
+    p.play({command: 'newHeadlines', articles: []});
+})
