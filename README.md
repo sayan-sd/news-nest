@@ -9,6 +9,7 @@ News Nest.io is a user-friendly news reading application built using React. It a
 - **Latest News**: Access the most recent news articles available.
 - **Source or Term Search**: Filter news based on specific sources or terms.
 - **Regional News**: Select news from different countries using the dropdown menu.
+![features](https://github.com/sayan-sd/news-nest/assets/147993392/a8eac496-9731-4307-a23f-9760b33591ef)
 
 ## Getting Started
 
@@ -37,5 +38,3 @@ If you find this project interesting or useful, feel free to contribute by:
 For any inquiries or suggestions, feel free to contact me on [LinkedIn](https://www.linkedin.com/in/sayan-sd/) or via [Email](mailto:sayan.sd@outlook.com). Don't forget to give this repository a ⭐️!
 
 ---
-
-Make sure to replace `"your-username"` in the clone link with your actual GitHub username. This `README.md` provides a brief overview of your app's functionalities, how to get started, contribute, and where to find you for further communication.
