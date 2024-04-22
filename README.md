@@ -1,7 +1,10 @@
 # News Nest.io
 ![title-img](https://github.com/sayan-sd/news-nest/assets/147993392/280f5a44-0f9e-4ede-8f59-0bd3dfc8946a)
 
-News Nest.io is a user-friendly news reading application built using React. It allows users to browse news articles through both normal text search and voice search functionalities. Users can interact with the application and access various options such as searching for the latest news, filtering news by source or specific terms, and exploring regional news based on different countries.
+News Nest.io is a user-friendly news-reading application built using React. It allows users to browse news articles through both normal text search and voice search functionalities. Users can interact with the application and access various options such as searching for the latest news, filtering news by source or specific terms, and exploring regional news based on different countries.
+
+**To view the demo video of the website, please [Click Here](https://www.linkedin.com/posts/sayan-sd_webdevelopment-webdeveloper-react-activity-7132241567855079424-I7Wz?utm_source=share&utm_medium=member_desktop).**
+
 
 ## Features
 
